@@ -342,12 +342,6 @@ const ActionButton = styled.button`
   }
 `
 
-interface PageProps {
-  params: {
-    slug: string;
-  };
-}
-
 interface Recipe {
   id: string;
   title: string;
@@ -392,7 +386,11 @@ const recipeData: { [key: string]: Recipe } = {
   }
 };
 
-const RecipeDetail = ({ params }: PageProps) => {
+export default function RecipeDetail({
+  params,
+}: {
+  params: { slug: string }
+}) {
   const recipe = recipeData[params.slug] || recipeData['classic-white-bread-sandwich'];
   
   const handlePrint = () => {
@@ -518,6 +516,4 @@ const RecipeDetail = ({ params }: PageProps) => {
       </Container>
     </>
   );
-};
-
-export default RecipeDetail; 
+} 
