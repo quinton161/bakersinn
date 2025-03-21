@@ -386,11 +386,14 @@ const recipeData: { [key: string]: Recipe } = {
   }
 };
 
-export default function RecipeDetail({
-  params,
-}: {
-  params: { slug: string }
-}) {
+interface RecipeDetailProps {
+  params: {
+    slug: string;
+  };
+  searchParams?: { [key: string]: string | string[] | undefined };
+}
+
+function RecipeDetail({ params, searchParams }: RecipeDetailProps) {
   const recipe = recipeData[params.slug] || recipeData['classic-white-bread-sandwich'];
   
   const handlePrint = () => {
@@ -516,4 +519,6 @@ export default function RecipeDetail({
       </Container>
     </>
   );
-} 
+}
+
+export default RecipeDetail; 
