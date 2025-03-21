@@ -1,5 +1,6 @@
 'use client'
 
+import React from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
 import styled from 'styled-components'
@@ -15,6 +16,7 @@ import ListAltIcon from '@mui/icons-material/ListAlt'
 import HomeIcon from '@mui/icons-material/Home'
 import CakeIcon from '@mui/icons-material/Cake'
 import SetMealIcon from '@mui/icons-material/SetMeal'
+import BackToHome from '../../components/BackToHome'
 
 const Container = styled.div`
   max-width: 1400px;
@@ -340,113 +342,58 @@ const ActionButton = styled.button`
   }
 `
 
-interface RecipeDetailProps {
+interface PageProps {
   params: {
     slug: string;
-  }
+  };
 }
 
-const recipeData = {
-  'shwarma-sandwich': {
-    title: 'Shwarma Sandwich',
-    description: 'A delicious Middle Eastern sandwich filled with marinated grilled chicken and fresh vegetables. Perfect for lunch or dinner!',
-    image: '/images/shwarma.png',
-    prepTime: '5 Minutes',
-    serves: '6 people',
-    category: 'Middle Eastern',
+interface Recipe {
+  id: string;
+  title: string;
+  description: string;
+  prepTime: string;
+  cookTime: string;
+  servings: number;
+  difficulty: string;
+  image: string;
+  ingredients: string[];
+  instructions: string[];
+  category: string;
+}
+
+const recipeData: { [key: string]: Recipe } = {
+  'classic-white-bread-sandwich': {
+    id: 'classic-white-bread-sandwich',
+    title: "Classic White Bread Sandwich",
+    description: "A delicious sandwich made with our fresh white bread, perfect for any time of day.",
+    prepTime: "10 mins",
+    cookTime: "5 mins",
+    servings: 1,
+    difficulty: "Easy",
+    image: "/images/breadslices.png",
     ingredients: [
-      '½ cup olive oil',
-      '½ cup ranch dressing',
-      '3 tablespoons Worcestershire sauce',
-      '1 tablespoon minced fresh rosemary',
-      '2 teaspoons salt',
-      '1 teaspoon lemon juice',
-      '1 teaspoon white vinegar',
-      '¼ teaspoon ground black pepper'
+      "2 slices of Baker's Inn White Bread",
+      "2 leaves of fresh lettuce",
+      "2 slices of tomato",
+      "2 slices of cheese",
+      "2 slices of ham or turkey",
+      "Mayonnaise",
+      "Mustard (optional)"
     ],
-    steps: [
-      {
-        title: 'Prepare the Marinade',
-        description: 'In a medium bowl, stir together the olive oil, ranch dressing, Worcestershire sauce, rosemary, salt, lemon juice, white vinegar, pepper, and sugar. Let stand for 5 minutes. Place chicken in the bowl, and stir to coat with the marinade. Cover and refrigerate for 30 minutes.'
-      },
-      {
-        title: 'Prepare for Grilling',
-        description: 'Preheat the grill for medium-high heat. Thread chicken onto skewers and discard marinade.'
-      },
-      {
-        title: 'Grill the Chicken',
-        description: 'Lightly oil the grill grate. Grill skewers for 8 to 12 minutes, or until the chicken is no longer pink in the center, and the juices run clear.'
-      }
-    ]
-  },
-  'sweet-shortbread': {
-    title: 'Sweet Shortbread',
-    description: 'A classic buttery shortbread cookie that melts in your mouth. Perfect for tea time or as a sweet treat any time of day!',
-    image: '/images/shortbread.png',
-    prepTime: '20 Minutes',
-    serves: '6 people',
-    category: 'Vegan Dessert',
-    ingredients: [
-      '½ cup olive oil',
-      '½ cup ranch dressing',
-      '3 tablespoons Worcestershire sauce',
-      '1 tablespoon minced fresh rosemary',
-      '2 teaspoons salt',
-      '1 teaspoon lemon juice',
-      '1 teaspoon white vinegar',
-      '¼ teaspoon ground black pepper'
+    instructions: [
+      "Start with two fresh slices of Baker's Inn White Bread",
+      "Spread mayonnaise and mustard on both slices",
+      "Layer lettuce, tomato, cheese, and meat",
+      "Close the sandwich and cut diagonally",
+      "Serve immediately and enjoy!"
     ],
-    steps: [
-      {
-        title: 'Prepare the Mixture',
-        description: 'In a medium bowl, stir together the olive oil, ranch dressing, Worcestershire sauce, rosemary, salt, lemon juice, white vinegar, pepper, and sugar. Let stand for 5 minutes. Place chicken in the bowl, and stir to coat with the marinade. Cover and refrigerate for 30 minutes.'
-      },
-      {
-        title: 'Prepare for Baking',
-        description: 'Preheat the grill for medium-high heat. Thread chicken onto skewers and discard marinade.'
-      },
-      {
-        title: 'Bake to Perfection',
-        description: 'Lightly oil the grill grate. Grill skewers for 8 to 12 minutes, or until the chicken is no longer pink in the center, and the juices run clear.'
-      }
-    ]
-  },
-  'salmon-strips': {
-    title: 'Salmon Strips',
-    description: 'Delicious and healthy salmon strips, perfectly seasoned and grilled to perfection. A family favorite that\'s both nutritious and easy to prepare!',
-    image: '/images/salmon.png',
-    prepTime: '20 Minutes',
-    serves: '6 people',
-    category: 'Family Meal',
-    ingredients: [
-      '½ cup olive oil',
-      '½ cup ranch dressing',
-      '3 tablespoons Worcestershire sauce',
-      '1 tablespoon minced fresh rosemary',
-      '2 teaspoons salt',
-      '1 teaspoon lemon juice',
-      '1 teaspoon white vinegar',
-      '¼ teaspoon ground black pepper'
-    ],
-    steps: [
-      {
-        title: 'Prepare the Marinade',
-        description: 'In a medium bowl, stir together the olive oil, ranch dressing, Worcestershire sauce, rosemary, salt, lemon juice, white vinegar, pepper, and sugar. Let stand for 5 minutes. Place chicken in the bowl, and stir to coat with the marinade. Cover and refrigerate for 30 minutes.'
-      },
-      {
-        title: 'Prepare for Grilling',
-        description: 'Preheat the grill for medium-high heat. Thread chicken onto skewers and discard marinade.'
-      },
-      {
-        title: 'Grill the Salmon',
-        description: 'Lightly oil the grill grate. Grill skewers for 8 to 12 minutes, or until the chicken is no longer pink in the center, and the juices run clear.'
-      }
-    ]
+    category: "Sandwiches"
   }
 };
 
-const RecipeDetail = ({ params }: RecipeDetailProps) => {
-  const recipe = recipeData[params.slug as keyof typeof recipeData];
+const RecipeDetail = ({ params }: PageProps) => {
+  const recipe = recipeData[params.slug] || recipeData['classic-white-bread-sandwich'];
   
   const handlePrint = () => {
     window.print();
@@ -455,119 +402,121 @@ const RecipeDetail = ({ params }: RecipeDetailProps) => {
   const handleShare = () => {
     if (navigator.share) {
       navigator.share({
-        title: `${recipe.title} Recipe`,
-        text: `Check out this delicious ${recipe.title} recipe!`,
+        title: recipe.title,
+        text: recipe.description,
         url: window.location.href,
       });
     }
   };
 
-  if (!recipe) {
-    return <div>Recipe not found</div>;
-  }
-
   return (
-    <Container>
-      <HeroSection>
-        <HeroImage>
-          <Image
-            src={recipe.image}
-            alt={recipe.title}
-            fill
-            style={{ objectFit: 'cover' }}
-            priority
-          />
-        </HeroImage>
-        <ButtonGroup>
-          <NavButton href="/">
-            <HomeIcon /> Back to Home
-          </NavButton>
-          <NavButton href="/recipes">
-            <ArrowBackIcon /> Back to Recipes
-          </NavButton>
-        </ButtonGroup>
-      </HeroSection>
+    <>
+      <BackToHome />
+      <Container>
+        <HeroSection>
+          <HeroImage>
+            <Image
+              src={recipe.image}
+              alt={recipe.title}
+              fill
+              style={{ objectFit: 'cover' }}
+              priority
+            />
+          </HeroImage>
+          
+          <ButtonGroup>
+            <NavButton href="/recipes">
+              <ArrowBackIcon /> Back to Recipes
+            </NavButton>
+            <NavButton href="/">
+              <HomeIcon /> Home
+            </NavButton>
+          </ButtonGroup>
+        </HeroSection>
 
-      <ContentWrapper>
-        <RecipeHeader>
-          <Title>{recipe.title}</Title>
-          <Description>{recipe.description}</Description>
-          <Stats>
-            <StatItem>
-              <StatIcon>
-                <AccessTimeIcon />
-              </StatIcon>
-              <StatInfo>
-                <StatLabel>Prep Time</StatLabel>
-                <StatValue>{recipe.prepTime}</StatValue>
-              </StatInfo>
-            </StatItem>
-            <StatItem>
-              <StatIcon>
-                <PeopleIcon />
-              </StatIcon>
-              <StatInfo>
-                <StatLabel>Serves</StatLabel>
-                <StatValue>{recipe.serves}</StatValue>
-              </StatInfo>
-            </StatItem>
-            <StatItem>
-              <StatIcon>
-                {recipe.category === 'Vegan Dessert' ? <CakeIcon /> : 
-                 recipe.category === 'Family Meal' ? <SetMealIcon /> : 
-                 <RestaurantIcon />}
-              </StatIcon>
-              <StatInfo>
-                <StatLabel>Category</StatLabel>
-                <StatValue>{recipe.category}</StatValue>
-              </StatInfo>
-            </StatItem>
-          </Stats>
-        </RecipeHeader>
+        <ContentWrapper>
+          <RecipeHeader>
+            <Title>{recipe.title}</Title>
+            <Description>{recipe.description}</Description>
+            
+            <Stats>
+              <StatItem>
+                <StatIcon>
+                  <AccessTimeIcon />
+                </StatIcon>
+                <StatInfo>
+                  <StatLabel>Prep Time</StatLabel>
+                  <StatValue>{recipe.prepTime}</StatValue>
+                </StatInfo>
+              </StatItem>
+              
+              <StatItem>
+                <StatIcon>
+                  <AccessTimeIcon />
+                </StatIcon>
+                <StatInfo>
+                  <StatLabel>Cook Time</StatLabel>
+                  <StatValue>{recipe.cookTime}</StatValue>
+                </StatInfo>
+              </StatItem>
+              
+              <StatItem>
+                <StatIcon>
+                  <PeopleIcon />
+                </StatIcon>
+                <StatInfo>
+                  <StatLabel>Servings</StatLabel>
+                  <StatValue>{recipe.servings}</StatValue>
+                </StatInfo>
+              </StatItem>
+            </Stats>
+          </RecipeHeader>
 
-        <ContentGrid>
-          <Section>
-            <SectionTitle>
-              <ListAltIcon /> Ingredients
-            </SectionTitle>
-            <IngredientsList>
-              {recipe.ingredients.map((ingredient, index) => (
-                <IngredientItem key={index}>{ingredient}</IngredientItem>
-              ))}
-            </IngredientsList>
-          </Section>
+          <ContentGrid>
+            <Section>
+              <SectionTitle>
+                <ListAltIcon /> Ingredients
+              </SectionTitle>
+              <IngredientsList>
+                {recipe.ingredients.map((ingredient, index) => (
+                  <IngredientItem key={index}>
+                    {ingredient}
+                  </IngredientItem>
+                ))}
+              </IngredientsList>
+            </Section>
 
-          <Section>
-            <SectionTitle>
-              <RestaurantIcon /> Directions
-            </SectionTitle>
-            <StepsList>
-              {recipe.steps.map((step, index) => (
-                <StepItem key={index}>
-                  <StepNumber>{index + 1}</StepNumber>
-                  <StepContent>
-                    <StepTitle>{step.title}</StepTitle>
-                    <StepDescription>{step.description}</StepDescription>
-                  </StepContent>
-                </StepItem>
-              ))}
-            </StepsList>
-          </Section>
-        </ContentGrid>
-      </ContentWrapper>
+            <Section>
+              <SectionTitle>
+                <RestaurantIcon /> Instructions
+              </SectionTitle>
+              <StepsList>
+                {recipe.instructions.map((instruction, index) => (
+                  <StepItem key={index}>
+                    <StepNumber>{index + 1}</StepNumber>
+                    <StepContent>
+                      <StepTitle>{instruction}</StepTitle>
+                    </StepContent>
+                  </StepItem>
+                ))}
+              </StepsList>
+            </Section>
+          </ContentGrid>
+        </ContentWrapper>
 
-      <ActionButtons>
-        <ActionButton onClick={() => {}} title="Save Recipe">
-          <FavoriteIcon />
-        </ActionButton>
-        <ActionButton onClick={handleShare} title="Share Recipe">
-          <ShareIcon />
-        </ActionButton>
-        <ActionButton onClick={handlePrint} title="Print Recipe">
-          <PrintIcon />
-        </ActionButton>
-      </ActionButtons>
-    </Container>
+        <ActionButtons>
+          <ActionButton onClick={handlePrint}>
+            <PrintIcon /> Print Recipe
+          </ActionButton>
+          <ActionButton onClick={handleShare}>
+            <ShareIcon /> Share Recipe
+          </ActionButton>
+          <ActionButton>
+            <FavoriteIcon /> Save Recipe
+          </ActionButton>
+        </ActionButtons>
+      </Container>
+    </>
   );
 };
 
