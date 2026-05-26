@@ -26,6 +26,18 @@ type CardItem = {
   href?: string
 }
 
+type CardPage = {
+  title: string
+  intro: string
+  cards: CardItem[]
+}
+
+type CopyPage = {
+  title: string
+  intro: string
+  body: string
+}
+
 type InvestorRelationsProps = {
   slug?: string[]
 }
@@ -172,7 +184,7 @@ const performance = [
   },
 ]
 
-const pageDetails: Record<string, { title: string; intro: string; cards: CardItem[] }> = {
+const pageDetails: Record<string, CardPage> = {
   'about': {
     title: 'About',
     intro: 'Learn who Simbisa Brands is, meet the team, review frequently asked questions and explore the investment case.',
@@ -301,7 +313,7 @@ const pageDetails: Record<string, { title: string; intro: string; cards: CardIte
   },
 }
 
-const subPageCopy: Record<string, { title: string; intro: string; body: string }> = {
+const subPageCopy: Record<string, CopyPage> = {
   'about/who-we-are': {
     title: 'Who we are',
     intro: 'African-focused restaurant company serving over 56 million customers across 9 African countries.',
@@ -636,7 +648,7 @@ function CardGrid({ items }: { items: CardItem[] }) {
   )
 }
 
-function getPage(slug?: string[]) {
+function getPage(slug?: string[]): CardPage | CopyPage | undefined {
   if (!slug || slug.length === 0) {
     return undefined
   }
@@ -644,6 +656,10 @@ function getPage(slug?: string[]) {
   const key = slug.join('/')
   const top = slug[0]
   return subPageCopy[key] || pageDetails[key] || pageDetails[top]
+}
+
+function isCardPage(page: CardPage | CopyPage): page is CardPage {
+  return 'cards' in page
 }
 
 export default function InvestorRelations({ slug }: InvestorRelationsProps) {
@@ -760,13 +776,13 @@ export default function InvestorRelations({ slug }: InvestorRelationsProps) {
       ) : (
         <Section>
           <Container>
-            {'cards' in page! ? (
-              <CardGrid items={page!.cards} />
+            {page && isCardPage(page) ? (
+              <CardGrid items={page.cards} />
             ) : (
               <Card>
                 <Icon name="document" />
-                <h3>{page!.title}</h3>
-                <p>{page!.body}</p>
+                <h3>{page?.title}</h3>
+                <p>{page?.body}</p>
               </Card>
             )}
           </Container>

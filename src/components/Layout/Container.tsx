@@ -1,7 +1,7 @@
 'use client'
 
 import styled from 'styled-components'
-import { containerWidths } from '@/styles/responsive'
+import { containerWidths } from '@/src/styles/responsive'
 
 interface ContainerProps {
   size?: 'small' | 'medium' | 'large' | 'xlarge';
