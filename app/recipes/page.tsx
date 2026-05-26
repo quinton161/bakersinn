@@ -1,75 +1,94 @@
-'use client';
+'use client'
 
-import React from 'react';
-import styled from 'styled-components';
-import BakersRecipes from '../components/BakersRecipes';
+import Image from 'next/image'
+import {
+  BorderTitle,
+  ButtonLink,
+  CardBody,
+  CardGrid,
+  Container,
+  ImageCard,
+  ImageFrame,
+  InnerPage,
+  Lead,
+  Section,
+  SectionTitle,
+} from '../components/SimbisaShared'
 
-const HeroSection = styled.section`
-  padding: 8rem 1rem 6rem;
-  background: #2B1B58;
-  color: white;
-  text-align: center;
-  position: relative;
-  overflow: hidden;
+const recipes = [
+  {
+    name: 'Classic White Bread Sandwich',
+    image: '/images/breadslices.png',
+    prep: '10 mins',
+    serves: '1 person',
+    href: '/recipe/classic-white-bread-sandwich',
+  },
+  {
+    name: 'Shwarma Sandwich',
+    image: '/images/shwarma.png',
+    prep: '20 mins',
+    serves: '2 people',
+    href: '/recipe/classic-white-bread-sandwich',
+  },
+  {
+    name: 'Sweet Shortbread',
+    image: '/images/shortbread.png',
+    prep: '20 mins',
+    serves: '6 people',
+    href: '/recipe/classic-white-bread-sandwich',
+  },
+  {
+    name: 'Salmon Strips',
+    image: '/images/salmon.png',
+    prep: '20 mins',
+    serves: '6 people',
+    href: '/recipe/classic-white-bread-sandwich',
+  },
+]
 
-  &::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: linear-gradient(45deg, rgba(43, 27, 88, 0.95), rgba(43, 27, 88, 0.8));
-    z-index: 1;
-  }
-`;
-
-const HeroContainer = styled.div`
-  max-width: 80rem;
-  margin: 0 auto;
-  position: relative;
-  z-index: 2;
-`;
-
-const Title = styled.h1`
-  font-size: 4.5rem;
-  margin-bottom: 1.5rem;
-  color: white;
-  font-weight: 800;
-  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-
-  @media (max-width: 768px) {
-    font-size: 3rem;
-  }
-`;
-
-const Description = styled.p`
-  color: white;
-  font-family: black;
-  font-size: 22.4px;
-  font-weight: 400;
-  line-height: 33.6px;
-  max-width: 800px;
-  margin: 0 auto;
-  opacity: 0.9;
-`;
-
-const RecipesPage = () => {
+export default function RecipesPage() {
   return (
-    <>
-      <HeroSection>
-        <HeroContainer>
-          <Title>Our Recipes</Title>
-          <Description>
-            Discover delicious recipes made with Baker's Inn bread. 
-            From quick snacks to family meals, we've got something for everyone.
-          </Description>
-        </HeroContainer>
-      </HeroSection>
-      
-      <BakersRecipes />
-    </>
-  );
-};
+    <InnerPage
+      eyebrow="Recipes"
+      title="Baker's Recipes"
+      intro="Recipe ideas using Baker's Inn products, from quick snacks to family meals."
+      heroImage="/images/recipes banner.png"
+    >
+      <Container>
+        <Section>
+          <BorderTitle>Meal ideas</BorderTitle>
+          <SectionTitle>Simple recipes made with fresh bread.</SectionTitle>
+          <Lead>
+            Keep the app routes working while presenting the recipes in the
+            clean Simbisa visual language.
+          </Lead>
+        </Section>
 
-export default RecipesPage; 
+        <CardGrid>
+          {recipes.map((recipe) => (
+            <ImageCard key={recipe.name}>
+              <ImageFrame>
+                <Image
+                  src={recipe.image}
+                  alt={recipe.name}
+                  fill
+                  sizes="(max-width: 760px) 100vw, 33vw"
+                  style={{ objectFit: 'cover' }}
+                />
+              </ImageFrame>
+              <CardBody>
+                <h3>{recipe.name}</h3>
+                <p>
+                  Prep Time: {recipe.prep}
+                  <br />
+                  Serves: {recipe.serves}
+                </p>
+                <ButtonLink href={recipe.href}>View recipe</ButtonLink>
+              </CardBody>
+            </ImageCard>
+          ))}
+        </CardGrid>
+      </Container>
+    </InnerPage>
+  )
+}

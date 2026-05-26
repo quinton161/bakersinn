@@ -1,9 +1,42 @@
+@font-face {
+  font-family: 'Ronnia';
+  src: url('/fonts/simbisa/Ronnia-Light.woff2') format('woff2');
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Ronnia';
+  src: url('/fonts/simbisa/Ronnia-Regular.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Ronnia';
+  src: url('/fonts/simbisa/Ronnia-Bold.woff2') format('woff2');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Open Sans Simbisa';
+  src: url('/fonts/simbisa/OpenSans-Regular.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
 /* Reset CSS */
 :root {
-  --primary-color: #B08C3C;
-  --secondary-color: #1B0F3D;
-  --text-color: #333;
-  --light-bg: #f8f8f8;
+  --primary-color: #d12a37;
+  --secondary-color: #683020;
+  --accent-color: #f48230;
+  --text-color: #404042;
+  --light-bg: #f5f4f2;
   --white: #ffffff;
 }
 
@@ -14,9 +47,175 @@
 }
 
 body {
-  font-family: 'Arial', sans-serif;
+  font-family: 'Ronnia', Arial, sans-serif;
   line-height: 1.6;
   color: var(--text-color);
+  background: var(--white);
+  overflow-x: hidden;
+}
+
+html {
+  overflow-x: hidden;
+}
+
+main {
+  overflow-x: clip;
+}
+
+.gsap-crav-loader {
+  align-items: center;
+  background: #a10c10;
+  clip-path: inset(0 0 0 0);
+  color: #fff9ec;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  inset: 0;
+  justify-content: center;
+  overflow: hidden;
+  position: fixed;
+  z-index: 5000;
+}
+
+.gsap-crav-loader-text {
+  font-family: 'Ronnia', Arial, sans-serif;
+  font-size: clamp(28px, 5vw, 74px);
+  font-weight: 300;
+  letter-spacing: -0.04em;
+  line-height: 0.9;
+  text-transform: uppercase;
+}
+
+.gsap-crav-loader-bar {
+  background: #fff9ec;
+  height: 3px;
+  max-width: 420px;
+  transform-origin: 0 50%;
+  width: 42vw;
+}
+
+.gsap-heading-echo {
+  color: currentColor;
+  inset: 0;
+  opacity: 0;
+  pointer-events: none;
+  position: absolute;
+  transform: translate(0.06em, 0.08em);
+  white-space: nowrap;
+  z-index: -1;
+}
+
+.gsap-scroll-progress {
+  background: #fff9ec;
+  height: 3px;
+  left: 0;
+  position: fixed;
+  top: 0;
+  transform: scaleX(0);
+  transform-origin: 0 50%;
+  width: 100%;
+  z-index: 5001;
+}
+
+.gsap-crav-ticker {
+  background: #a10c10;
+  border-top: 1px solid rgba(255, 249, 236, 0.25);
+  bottom: 0;
+  color: #fff9ec;
+  contain: paint;
+  font-family: 'Ronnia', Arial, sans-serif;
+  font-size: 13px;
+  font-weight: 700;
+  left: 0;
+  letter-spacing: 0.16em;
+  overflow: hidden;
+  padding: 8px 0;
+  pointer-events: none;
+  position: fixed;
+  text-transform: uppercase;
+  max-width: 100vw;
+  width: 100%;
+  z-index: 2500;
+}
+
+.gsap-crav-ticker-track {
+  display: inline-block;
+  min-width: max-content;
+  will-change: transform;
+  white-space: nowrap;
+}
+
+.gsap-crav-cursor,
+.gsap-crav-cursor-dot {
+  left: 0;
+  opacity: 0;
+  pointer-events: none;
+  position: fixed;
+  top: 0;
+  z-index: 6000;
+}
+
+.gsap-crav-cursor {
+  align-items: center;
+  background: #fff9ec;
+  border: 1px solid rgba(161, 12, 16, 0.2);
+  border-radius: 999px;
+  color: #a10c10;
+  display: flex;
+  font-family: 'Ronnia', Arial, sans-serif;
+  font-size: 11px;
+  font-weight: 700;
+  height: 56px;
+  justify-content: center;
+  letter-spacing: 0.12em;
+  mix-blend-mode: normal;
+  text-transform: uppercase;
+  transform: translate(-50%, -50%) scale(0.62);
+  transition:
+    background 180ms ease,
+    color 180ms ease,
+    height 180ms ease,
+    width 180ms ease;
+  width: 56px;
+}
+
+.gsap-crav-cursor-dot {
+  background: #a10c10;
+  border-radius: 999px;
+  height: 8px;
+  transform: translate(-50%, -50%);
+  width: 8px;
+}
+
+.gsap-crav-cursor-label {
+  opacity: 0;
+  transform: scale(0.8);
+  transition:
+    opacity 180ms ease,
+    transform 180ms ease;
+}
+
+.gsap-cursor-active .gsap-crav-cursor {
+  background: #a10c10;
+  color: #fff9ec;
+  height: 78px;
+  width: 78px;
+}
+
+.gsap-cursor-active .gsap-crav-cursor-label {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.gsap-cursor-active .gsap-crav-cursor-dot {
+  opacity: 0 !important;
+}
+
+@media (pointer: coarse) {
+  .gsap-crav-cursor,
+  .gsap-crav-cursor-dot {
+    display: none;
+  }
 }
 
 .container {

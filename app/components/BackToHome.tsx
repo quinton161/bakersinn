@@ -6,7 +6,7 @@ import Link from 'next/link';
 
 const BackButton = styled.div`
   position: fixed;
-  top: 100px;
+  top: 118px;
   left: 30px;
   z-index: 100;
 
@@ -21,7 +21,7 @@ const StyledLink = styled(Link)`
   align-items: center;
   gap: 8px;
   padding: 12px 20px;
-  background: #2B1B58;
+  background: #a10c10;
   color: white;
   text-decoration: none;
   border-radius: 50px;
@@ -31,7 +31,7 @@ const StyledLink = styled(Link)`
 
   &:hover {
     transform: translateY(-2px);
-    background: #3d2a75;
+    background: #683020;
     box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
   }
 

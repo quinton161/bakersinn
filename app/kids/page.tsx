@@ -1,209 +1,119 @@
-'use client';
+'use client'
 
-import React, { useState } from 'react';
-import styled from 'styled-components';
-import KidsCorner from '../components/KidsCorner';
-import BackToHome from '../components/BackToHome';
+import Image from 'next/image'
+import {
+  BorderTitle,
+  CardBody,
+  CardGrid,
+  Container,
+  ImageCard,
+  ImageFrame,
+  ImagePanel,
+  ImageText,
+  InnerPage,
+  Lead,
+  Section,
+  SectionTitle,
+  TextPanel,
+  YellowPanel,
+} from '../components/SimbisaShared'
 
-const Modal = styled.div<{ $isOpen: boolean }>`
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(0, 0, 0, 0.8);
-  display: ${props => props.$isOpen ? 'flex' : 'none'};
-  justify-content: center;
-  align-items: center;
-  z-index: 1000;
-  cursor: pointer;
-`;
+const activities = [
+  {
+    title: 'Maze Challenge',
+    text: "A fun printable activity for children to explore the Baker's Inn world.",
+    image: '/images/maze.png',
+  },
+  {
+    title: 'Pacman Game',
+    text: "A playful arcade-style corner for younger Baker's Inn fans.",
+    image: '/images/pacman.png',
+  },
+  {
+    title: 'Super Mario Fun',
+    text: 'Bright character-led activities from the existing kids corner assets.',
+    image: '/images/mariofinal.png',
+  },
+]
 
-const ModalContent = styled.div`
-  position: relative;
-  max-width: 90%;
-  max-height: 90vh;
-  margin: auto;
-  
-  img {
-    max-width: 100%;
-    max-height: 90vh;
-    object-fit: contain;
-    border-radius: 8px;
-  }
-`;
-
-const CloseButton = styled.button`
-  position: absolute;
-  top: -40px;
-  right: 0;
-  background: none;
-  border: none;
-  color: white;
-  font-size: 30px;
-  cursor: pointer;
-  padding: 8px;
-  
-  &:hover {
-    opacity: 0.8;
-  }
-`;
-
-const GamesSection = styled.section`
-  padding: 4rem 1rem;
-  background: white;
-`;
-
-const Container = styled.div`
-  max-width: 80rem;
-  margin: 0 auto;
-`;
-
-const GamesGrid = styled.div`
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 2rem;
-  margin-top: 3rem;
-
-  @media (max-width: 768px) {
-    grid-template-columns: repeat(2, 1fr);
-  }
-
-  @media (max-width: 480px) {
-    grid-template-columns: 1fr;
-  }
-`;
-
-const GameCard = styled.div`
-  background: white;
-  border-radius: 1rem;
-  overflow: hidden;
-  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
-  transition: transform 0.2s;
-
-  &:hover {
-    transform: translateY(-5px);
-  }
-`;
-
-const GameImage = styled.div`
-  position: relative;
-  width: 100%;
-  height: 200px;
-  cursor: pointer;
-  overflow: hidden;
-
-  img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    transition: transform 0.3s ease;
-  }
-
-  &:hover img {
-    transform: scale(1.1);
-  }
-`;
-
-const GameContent = styled.div`
-  padding: 1.5rem;
-  text-align: center;
-
-  h3 {
-    font-size: 1.5rem;
-    color: #27235C;
-    margin-bottom: 0.5rem;
-  }
-
-  p {
-    color: #666;
-    margin-bottom: 1rem;
-  }
-`;
-
-const PlayButton = styled.button`
-  background: #FF0000;
-  color: white;
-  border: none;
-  padding: 0.75rem 2rem;
-  border-radius: 4px;
-  font-weight: bold;
-  cursor: pointer;
-  transition: all 0.3s ease;
-
-  &:hover {
-    background: #E00000;
-    transform: translateY(-2px);
-  }
-
-  &:active {
-    transform: translateY(0);
-  }
-`;
-
-const KidsPage = () => {
-  const [selectedImage, setSelectedImage] = useState<string | null>(null);
-
-  const handleImageClick = (imageSrc: string) => {
-    setSelectedImage(imageSrc);
-  };
-
-  const handleCloseModal = () => {
-    setSelectedImage(null);
-  };
-
-  const games = [
-    {
-      title: "Bread Jump",
-      description: "Help the bread slice jump over obstacles and collect points!",
-      image: "/images/breadslices.png"
-    },
-    {
-      title: "Baker's Puzzle",
-      description: "Match 3 or more bakery items to score points and clear the board!",
-      image: "/images/maze.png"
-    },
-    {
-      title: "Kitchen Rush",
-      description: "Help the baker prepare orders in this fast-paced cooking game!",
-      image: "/images/pacman.png"
-    }
-  ];
-
+export default function KidsPage() {
   return (
-    <>
-      <BackToHome />
-      <Modal $isOpen={!!selectedImage} onClick={handleCloseModal}>
-        <ModalContent>
-          <CloseButton onClick={handleCloseModal}>&times;</CloseButton>
-          {selectedImage && (
-            <img src={selectedImage} alt="Enlarged view" />
-          )}
-        </ModalContent>
-      </Modal>
+    <InnerPage
+      eyebrow="Kids Corner"
+      title="Kids Corner"
+      intro="The kids area remains part of the app, now styled with the Simbisa page layout and brand colours."
+      heroImage="/images/Kids Corner.png"
+    >
+      <Container>
+        <Section>
+          <BorderTitle>Activities</BorderTitle>
+          <SectionTitle>Fun for the young Baker's Inn audience.</SectionTitle>
+          <Lead>
+            This page keeps the original kids route and content area while
+            aligning the visuals to the Simbisa corporate style.
+          </Lead>
+        </Section>
 
-      <KidsCorner />
-      
-      <GamesSection>
-        <Container>
-          <GamesGrid>
-            {games.map((game, index) => (
-              <GameCard key={index}>
-                <GameImage onClick={() => handleImageClick(game.image)}>
-                  <img src={game.image} alt={game.title} />
-                </GameImage>
-                <GameContent>
-                  <h3>{game.title}</h3>
-                  <p>{game.description}</p>
-                  <PlayButton>Play Now</PlayButton>
-                </GameContent>
-              </GameCard>
+        <ImageText>
+          <ImagePanel>
+            <Image
+              src="/images/kids group.png"
+              alt="Baker's Inn kids corner"
+              fill
+              sizes="(max-width: 780px) 100vw, 50vw"
+              style={{ objectFit: 'cover' }}
+            />
+          </ImagePanel>
+          <YellowPanel>
+            <h3>Games and learning</h3>
+            <p>
+              Use this space for games, puzzles, colouring pages and family
+              friendly Baker's Inn activities.
+            </p>
+          </YellowPanel>
+        </ImageText>
+
+        <Section>
+          <CardGrid>
+            {activities.map((activity) => (
+              <ImageCard key={activity.title}>
+                <ImageFrame>
+                  <Image
+                    src={activity.image}
+                    alt={activity.title}
+                    fill
+                    sizes="(max-width: 760px) 100vw, 33vw"
+                    style={{ objectFit: 'cover' }}
+                  />
+                </ImageFrame>
+                <CardBody>
+                  <h3>{activity.title}</h3>
+                  <p>{activity.text}</p>
+                </CardBody>
+              </ImageCard>
             ))}
-          </GamesGrid>
-        </Container>
-      </GamesSection>
-    </>
-  );
-};
+          </CardGrid>
+        </Section>
 
-export default KidsPage; 
+        <ImageText>
+          <TextPanel>
+            <h3>Designed to be editable</h3>
+            <p>
+              The page is ready for you to edit activity names, images and
+              descriptions after reviewing the running site.
+            </p>
+          </TextPanel>
+          <ImagePanel>
+            <Image
+              src="/images/Corner.png"
+              alt="Kids activity corner"
+              fill
+              sizes="(max-width: 780px) 100vw, 50vw"
+              style={{ objectFit: 'cover' }}
+            />
+          </ImagePanel>
+        </ImageText>
+      </Container>
+    </InnerPage>
+  )
+}

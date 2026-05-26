@@ -179,6 +179,7 @@ const KidsCorner: React.FC = () => {
         <ModalContent>
           <CloseButton onClick={handleCloseModal}>&times;</CloseButton>
           {selectedImage && (
+            // eslint-disable-next-line @next/next/no-img-element
             <img src={selectedImage} alt="Enlarged view" />
           )}
         </ModalContent>
